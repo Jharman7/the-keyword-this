@@ -2,20 +2,25 @@
   // 1) What is the purpose of the 'this keyword'?
 
       //Answer
-
+/*    The this keyword refers to the context from which this method is called.
   // 2) What are the four rules that govern what the 'this keyword' is bound to and describe each?
 
       //Answer
+      default -
+      implicit -
+      explicit -
 
   // 3) What is the difference between call and apply?
 
       //Answer
-
+      call passes in each argument individually and apply takes all arguments as an array
   // 4) What does .bind do?
 
       //Answer
-
-
+      it creates a new function that is bound to a specific context so
+      var thingy = fn.bind(obj);
+      means that if thingy(); is ever called it will always call fn.obj();
+*/
 //Next Problem
 
 //Create an object called user which has the following properties.
@@ -24,9 +29,15 @@
   //getUsername --> which is a function that returns the current object's username property. *Don't use 'user' instead use the 'this' keyword*
 
     //Code Here
-
+var user = {
+  username: 'jeff',
+  email: 'myemail@email.com',
+  getUsername: function () {
+    return this.username;
+  }
+}
 //Now, invoke the getUsername method and verify you got the username of the object and not anything else.
-
+console.log(user.getUsername());
 
 //Next Problem
 
@@ -43,7 +54,19 @@ mustang.moveCar(); //increments mustang' move property by 10. Returns the new mo
 
 //Hint, you'll need to write a moveCar function which is added to every object that is being returned from the Car function. You'll also need to use the 'this' keyword properly in order to make sure you're invoking moveCar on the right object (prius vs mustang).
 
+function Car (make,model,year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.move = 0;
+  this.moveCar = function () {
+    return this.move = this.move + 10;
+  }
+}
 
+// Car.prototype.moveCar = function () {
+//   return this.move = this.move + 10;
+// }
 
 //Continuation of previous problem
 
@@ -55,7 +78,8 @@ var getYear = function(){
 
 //Note(no tests)
   //Code Here
-
+console.log(getYear.call(prius));
+console.log(getYear.call(mustang));
 
 //New Problem
 
@@ -68,7 +92,7 @@ var myUser = {
 };
 
 var getMyUsername = function(){
-  console.log(this.username);
+  console.log(myUser.username);
 };
 
 setTimeout(getMyUsername, 5000);
@@ -80,5 +104,5 @@ setTimeout(getMyUsername, 5000);
 //In the example above, what is the 'this keyword' bound to when getUsername runs?
 
   //Answer Here
-
+  // global username variable
 //Fix the setTimeout invocation so that the user object will be the focal object when getUsername is ran.
